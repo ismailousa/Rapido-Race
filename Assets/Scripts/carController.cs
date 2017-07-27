@@ -5,8 +5,8 @@ using UnityEngine;
 public class carController : MonoBehaviour {
 
     public float carSpeed;
-    Vector3 position;
-	// Use this for initialization
+    public float maxPos = 2.3f;
+    Vector3 position;	// Use this for initialization
 	void Start () {
         position = transform.position;
 	}
@@ -15,6 +15,8 @@ public class carController : MonoBehaviour {
 	void Update () {
 
         position.x += Input.GetAxis("Horizontal") * carSpeed * Time.deltaTime;
+
+        position.x = Mathf.Clamp(position.x, -maxPos, maxPos);
         transform.position = position;
 	}
 }
