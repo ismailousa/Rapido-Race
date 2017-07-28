@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class carSpawner : MonoBehaviour {
 
-    public GameObject car;
+    public GameObject[] cars;
+    int carNo;
     public float maxPos = 2.3f;
-    public float delayTimer = 0.5f;
+    float delayTimer = 0.8f;
     float timer;
 	// Use this for initialization
 	void Start () {
@@ -20,8 +21,9 @@ public class carSpawner : MonoBehaviour {
         if (timer <= 0)
         {
             Vector3 carPos = new Vector3(Random.Range(-maxPos, maxPos), transform.position.y, transform.position.z);
-            Instantiate(car, carPos, transform.rotation);
-            timer = delayTimer;
+            carNo = Random.Range(0, 6);
+            Instantiate(cars[carNo], carPos, transform.rotation);
+            timer = delayTimer = Random.Range(0.2f, 1.5f);
         }        
     }
 }
