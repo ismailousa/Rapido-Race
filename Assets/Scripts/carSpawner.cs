@@ -23,7 +23,7 @@ public class carSpawner : MonoBehaviour {
             Vector3 carPos = new Vector3(Random.Range(-maxPos, maxPos), transform.position.y, transform.position.z);
             carNo = Random.Range(0, 6);
             Instantiate(cars[carNo], carPos, transform.rotation);
-            timer = delayTimer = Random.Range(0.2f, 1.5f);
+            timer = delayTimer = Random.Range(0.2f, 1.2f);
         }        
     }
 }
