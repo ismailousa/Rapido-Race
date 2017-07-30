@@ -18,7 +18,7 @@ public class uiManager : MonoBehaviour {
     public void Play()
     {
         //Application.LoadLevel("level1");
-        SceneManager.LoadScene("level1",LoadSceneMode.Single);
+        SceneManager.LoadScene("level1");
     }
 
     public void Pause()
