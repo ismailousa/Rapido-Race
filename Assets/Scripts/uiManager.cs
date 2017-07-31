@@ -2,18 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class uiManager : MonoBehaviour {
 
+    public Text scoreText;
+    public int score;
+    bool gameOver;
+
 	// Use this for initialization
 	void Start () {
-		
+        gameOver = false;
+        score = 0;
+        InvokeRepeating("scoreUpdate", 1.0f, 0.5f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        scoreText.text = "Score: " + score;
 	}
+
+    public void scoreUpdate()
+    {
+        if(!gameOver)
+            score++;
+    }
+
+    public void setGameOVer()
+    {
+        gameOver = true;
+    }
 
     public void Play()
     {

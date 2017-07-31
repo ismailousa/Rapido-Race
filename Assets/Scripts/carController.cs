@@ -7,6 +7,8 @@ public class carController : MonoBehaviour {
     public float carSpeed;
     public float maxPos = 2.3f;
     Vector3 position;	// Use this for initialization
+    public uiManager ui;
+
 	void Start () {
         position = transform.position;
 	}
@@ -23,6 +25,9 @@ public class carController : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Enemy Car")
+        {
             Destroy(gameObject);
+            ui.setGameOVer();
+        }
     }
 }
