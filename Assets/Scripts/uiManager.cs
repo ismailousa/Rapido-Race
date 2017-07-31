@@ -46,4 +46,19 @@ public class uiManager : MonoBehaviour {
         else
             Time.timeScale = 1;
     }
+
+    public void Replay()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void Menu()
+    {
+        SceneManager.LoadScene("menu");
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
 }
