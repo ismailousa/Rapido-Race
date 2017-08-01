@@ -6,8 +6,12 @@ using UnityEngine.UI;
 
 public class uiManager : MonoBehaviour {
 
+    private AudioSource[] allAudioSources;
+    public Button[] buttons;
     public Text scoreText;
+    public Text HighScore;
     public int score;
+    public static int highestScore;
     bool gameOver;
 
 	// Use this for initialization
@@ -15,12 +19,21 @@ public class uiManager : MonoBehaviour {
         gameOver = false;
         score = 0;
         InvokeRepeating("scoreUpdate", 1.0f, 0.5f);
-	}
+        allAudioSources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+        highestScore = PlayerPrefs.GetInt("Highscore", highestScore);
+        highestScore = 5;
+        setHighScore();
+    }
 	
 	// Update is called once per frame
 	void Update () {
         scoreText.text = "Score: " + score;
 	}
+
+    void setHighScore()
+    {
+        HighScore.text = "HighScore: " + highestScore.ToString();
+    }
 
     public void scoreUpdate()
     {
@@ -31,6 +44,14 @@ public class uiManager : MonoBehaviour {
     public void setGameOVer()
     {
         gameOver = true;
+        if (score > highestScore)
+        {
+            highestScore = score;
+            PlayerPrefs.SetInt("Highscore", highestScore);
+            PlayerPrefs.Save();
+        }
+        foreach (Button button in buttons)
+            button.gameObject.SetActive(true);
     }
 
     public void Play()
@@ -42,9 +63,21 @@ public class uiManager : MonoBehaviour {
     public void Pause()
     {
         if (Time.timeScale == 1)
+        {
             Time.timeScale = 0;
+            foreach (AudioSource audioS in allAudioSources)
+            {
+                audioS.Pause();
+            }
+        }
         else
+        {
             Time.timeScale = 1;
+            foreach (AudioSource audioS in allAudioSources)
+            {
+                audioS.UnPause();
+            }
+        }
     }
 
     public void Replay()
@@ -55,6 +88,7 @@ public class uiManager : MonoBehaviour {
     public void Menu()
     {
         SceneManager.LoadScene("menu");
+        setHighScore();
     }
 
     public void Exit()
