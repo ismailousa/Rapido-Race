@@ -9,6 +9,11 @@ public class carController : MonoBehaviour {
     Vector3 position;	// Use this for initialization
     public uiManager ui;
 
+    void Awake()
+    {
+        ui.am.carSound.Play();
+    }
+
 	void Start () {
         position = transform.position;
 	}
@@ -28,6 +33,7 @@ public class carController : MonoBehaviour {
         {
             Destroy(gameObject);
             ui.setGameOVer();
+            ui.am.carSound.Stop();
         }
     }
 }

@@ -6,20 +6,21 @@ using UnityEngine.UI;
 
 public class uiManager : MonoBehaviour {
 
-    private AudioSource[] allAudioSources;
+   // private AudioSource[] allAudioSources;
     public Button[] buttons;
     public Text scoreText;
     public Text HighScore;
     public int score;
     public static int highestScore;
     bool gameOver;
+    public audioManager am;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         gameOver = false;
         score = 0;
         InvokeRepeating("scoreUpdate", 1.0f, 0.5f);
-        allAudioSources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+        //allAudioSources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
         highestScore = PlayerPrefs.GetInt("Highscore", highestScore);
         highestScore = 5;
         setHighScore();
@@ -65,18 +66,20 @@ public class uiManager : MonoBehaviour {
         if (Time.timeScale == 1)
         {
             Time.timeScale = 0;
-            foreach (AudioSource audioS in allAudioSources)
-            {
-                audioS.Pause();
-            }
+            am.carSound.Pause();
+            //foreach (AudioSource audioS in allAudioSources)
+            //{
+            //    audioS.Pause();
+            //}
         }
         else
         {
             Time.timeScale = 1;
-            foreach (AudioSource audioS in allAudioSources)
-            {
-                audioS.UnPause();
-            }
+            am.carSound.UnPause();
+            //foreach (AudioSource audioS in allAudioSources)
+            //{
+            //    audioS.UnPause();
+            //}
         }
     }
 
