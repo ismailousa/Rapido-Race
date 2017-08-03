@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class trackMove : MonoBehaviour {
 
-    public float speed;
+    float maxSpeed = 2.3f;
+    float acceleration = 0.0005f;
+    float speed = 0.6f;
     Vector2 offset;
 	// Use this for initialization
 	void Start () {
@@ -13,6 +15,8 @@ public class trackMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (speed < maxSpeed)
+            speed += acceleration;
         offset = new Vector2(0, Time.time * speed);
         GetComponent<Renderer>().material.mainTextureOffset = offset;
 	}
