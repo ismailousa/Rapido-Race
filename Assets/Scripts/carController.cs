@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class carController : MonoBehaviour {
 
-    float carSpeed = 0.3f;
+    float carSpeed = 6f;
     float maxPos = 2.3f;
     Vector3 position;	// Use this for initialization
     public uiManager ui;
     bool currentPlatformAndroid;
+    Rigidbody2D rb;
 
     void Awake()
     {
+        rb = GetComponent<Rigidbody2D>();
     #if UNITY_ANDROID
             currentPlatformAndroid = true;
     #else
@@ -21,21 +23,29 @@ public class carController : MonoBehaviour {
     }
 
 	void Start () {
-        position = transform.position;
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.touchCount > 0)
-        {
             if (currentPlatformAndroid)
-                position.x += Input.touches[0].deltaPosition.x * carSpeed * Time.deltaTime;
+            //position.x += Input.touches[0].deltaPosition.x * carSpeed * Time.deltaTime;
+            {
+                float x = Input.acceleration.x;
+                Debug.Log("X:" + x);
+            if (x < -0.1f)
+                rb.velocity = new Vector3(-carSpeed, 0, 0);
+            else if (x > 0.1f)
+                rb.velocity = new Vector3(carSpeed, 0, 0);
+            else
+                rb.velocity = Vector2.zero;
+           // position.x += Input.acceleration.x * carSpeed * Time.deltaTime;
+        }
             else
                 position.x += Input.GetAxis("Horizontal") * carSpeed * Time.deltaTime;
-
-            position.x = Mathf.Clamp(position.x, -maxPos, maxPos);
-            transform.position = position;
-        }
+        position = transform.position;
+        position.x = Mathf.Clamp(position.x, -maxPos, maxPos);
+        transform.position = position;
     }
 
     void OnCollisionEnter2D(Collision2D col)

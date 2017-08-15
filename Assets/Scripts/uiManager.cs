@@ -11,7 +11,6 @@ public class uiManager : MonoBehaviour {
     public Text scoreText;
     public Text HighScore;
     public int score;
-    public static int highestScore;
     bool gameOver;
     public audioManager am;
 
@@ -20,21 +19,12 @@ public class uiManager : MonoBehaviour {
         gameOver = false;
         score = 0;
         InvokeRepeating("scoreUpdate", 1.0f, 0.5f);
-        //allAudioSources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
-        highestScore = PlayerPrefs.GetInt("Highscore", highestScore);
-        highestScore = 5;
-        setHighScore();
     }
 	
 	// Update is called once per frame
 	void Update () {
         scoreText.text = "Score: " + score;
 	}
-
-    void setHighScore()
-    {
-        HighScore.text = "HighScore: " + highestScore.ToString();
-    }
 
     public void scoreUpdate()
     {
@@ -45,12 +35,6 @@ public class uiManager : MonoBehaviour {
     public void setGameOVer()
     {
         gameOver = true;
-        if (score > highestScore)
-        {
-            highestScore = score;
-            PlayerPrefs.SetInt("Highscore", highestScore);
-            PlayerPrefs.Save();
-        }
         foreach (Button button in buttons)
             button.gameObject.SetActive(true);
     }
@@ -67,19 +51,11 @@ public class uiManager : MonoBehaviour {
         {
             Time.timeScale = 0;
             am.carSound.Pause();
-            //foreach (AudioSource audioS in allAudioSources)
-            //{
-            //    audioS.Pause();
-            //}
         }
         else
         {
             Time.timeScale = 1;
             am.carSound.UnPause();
-            //foreach (AudioSource audioS in allAudioSources)
-            //{
-            //    audioS.UnPause();
-            //}
         }
     }
 
@@ -91,7 +67,6 @@ public class uiManager : MonoBehaviour {
     public void Menu()
     {
         SceneManager.LoadScene("menu");
-        setHighScore();
     }
 
     public void Exit()
